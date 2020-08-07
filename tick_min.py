@@ -146,16 +146,19 @@ if __name__ == "__main__":
         if len(mins) > 0:
             maxday_min = max(mins)
 
-    ticks = [f.split('.')[0] for f in os.listdir(cfg.tick_csv_gz_path) if f > maxday_min]
+    ticks = [f.split('.')[0] for f in os.listdir(cfg.tick_csv_gz_path) if f.endswith('.tar.gz') and f > maxday_min]
     # for ... do tick_min
     for d in ticks:
         csv_tick_min(d)
-    maxday_min = max(ticks)
+    if len(ticks) > 0:
+        maxday_min = max(ticks)
     next_day = trading_days[trading_days.index(maxday_min)+1]
+    cfg.log.info(f'waiting for next day {next_day} ...')
     while True:
         if os.path.exists(os.path.join(cfg.tick_csv_gz_path, f'{next_day}.csv.gz')):
             csv_tick_min(next_day)
             next_day = trading_days[trading_days.index(next_day)+1]
+            cfg.log.info(f'waiting for next day {next_day} ...')
         sleep(60 * 10)
 
 
