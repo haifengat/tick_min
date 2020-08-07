@@ -115,7 +115,7 @@ def csv_tick_min(tradingday: str):
             line = gz_file.readline().decode(encoding='utf8')
 
     # 合成的分钟入库
-    with gzip.open(os.path.join(cfg.min_csv_gz_path, f"{tradingday}.csv.gz"), 'w') as f_min:
+    with gzip.open(os.path.join(cfg.min_csv_gz_path, f"{tradingday}.gz"), 'w') as f_min:
         f_min.write(bytes('DateTime\tInstrument\tOpen\tHigh\tLow\tClose\tVolume\tOpenInterest\n', encoding='utf-8'))
         for mins in inst_mins.values():
             for m in sorted(mins.values(), key=lambda x: x['DateTime']):
@@ -130,6 +130,8 @@ def csv_tick_min(tradingday: str):
                     else:
                         continue
                 f_min.write(bytes(f"{m['DateTime']}\t{m['Instrument']}\t{m['Open']}\t{m['High']}\t{m['Low']}\t{m['Close']}\t{m['Volume']}\t{m['OpenInterest']}\n", encoding='utf-8'))
+    # 完成后改名,避免后续操作读到未完成的数据
+    os.rename(os.path.join(cfg.min_csv_gz_path, f"{tradingday}.gz"), os.path.join(cfg.min_csv_gz_path, f"{tradingday}.csv.gz"))
     cfg.log.info(f'{tradingday} finish.')
 
 

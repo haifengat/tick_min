@@ -17,7 +17,7 @@ from color_log import Logger
 
 log = Logger()
 
-tick_csv_gz_path = '/mnt/future_csv_gz'
+tick_csv_gz_path = '/mnt/future_tick_csv_gz'
 if 'tick_csv_gz_path' in os.environ:
     tick_csv_gz_path = os.environ['tick_csv_gz_path']
 

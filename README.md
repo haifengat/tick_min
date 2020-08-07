@@ -21,6 +21,7 @@ docker pull haifengat/ctp_real_md && docker tag haifengat/ctp_real_md haifengat/
 ```
 
 ### docker-compose
+`docker-compose --compatibility up -d`
 ```yml
 version: "3.1"
 
