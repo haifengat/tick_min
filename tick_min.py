@@ -159,6 +159,7 @@ if __name__ == "__main__":
             csv_tick_min(next_day)
             next_day = trading_days[trading_days.index(next_day)+1]
             cfg.log.info(f'waiting for next day {next_day} ...')
+            continue
         sleep(60 * 10)
 
 
