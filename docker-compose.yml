@@ -1,5 +1,4 @@
 version: "3.7"
-
 services:
     tick_min:
         image: haifengat/tick_min
