@@ -31,6 +31,8 @@ def init():
             if r['tra'] == 'false':
                 continue
             trading_days.append(r['day'])
+    # trading_days = sorted(trading_days)
+    trading_days.sort()
             
     trade_time.clear()
     tmp = {}
