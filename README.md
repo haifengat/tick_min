@@ -17,7 +17,7 @@ ENTRYPOINT ["python", "/home/tick_min.py"]
 ### build
 ```bash
 # 通过github git push触发 hub.docker自动build
-docker pull haifengat/ctp_real_md && docker tag haifengat/ctp_real_md haifengat/ctp_real_md:`date +%Y%m%d` && docker push haifengat/ctp_real_md:`date +%Y%m%d`
+docker pull haifengat/tick_min && docker tag haifengat/ctp_real_md haifengat/tick_min:`date +%Y%m%d` && docker push haifengat/tick_min:`date +%Y%m%d`
 ```
 
 ### 启动
