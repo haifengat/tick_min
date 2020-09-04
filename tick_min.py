@@ -154,7 +154,7 @@ if __name__ == "__main__":
         csv_tick_min(d)
     if len(ticks) > 0:
         maxday_min = max(ticks)
-    else: # 无tick数据取当前日期
+    elif maxday_min == '': # 无tick数据取当前日期
         maxday_min = (datetime.now()+timedelta(days=-1)).strftime('%Y%m%d')
     next_day = trading_days[trading_days.index(maxday_min)+1]
     cfg.log.info(f'waiting for next day {next_day} ...')
