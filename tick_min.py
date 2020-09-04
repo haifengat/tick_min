@@ -11,7 +11,7 @@
 # here put the import lib
 import config as cfg
 import csv, json, sys, os
-from time import sleep
+from time import sleep, time, strftime
 from datetime import datetime, timedelta
 import gzip
 
@@ -148,12 +148,14 @@ if __name__ == "__main__":
         if len(mins) > 0:
             maxday_min = max(mins)
 
-    ticks = [f.split('.')[0] for f in os.listdir(cfg.tick_csv_gz_path) if f.endswith('.tar.gz') and f > maxday_min]
+    ticks = [f for f in [f.split('.')[0] for f in os.listdir(cfg.tick_csv_gz_path) if f.endswith('.csv.gz')] if f > maxday_min]
     # for ... do tick_min
     for d in ticks:
         csv_tick_min(d)
     if len(ticks) > 0:
         maxday_min = max(ticks)
+    else: # 无tick数据取当前日期
+        maxday_min = (datetime.now()+timedelta(days=-1)).strftime('%Y%m%d')
     next_day = trading_days[trading_days.index(maxday_min)+1]
     cfg.log.info(f'waiting for next day {next_day} ...')
     while True:
