@@ -1,19 +1,6 @@
 ## 说明
 处理期货数据 从tick到min
 
-
-#### DockerFile
-```dockerfile
-FROM haifengat/ctp_real_md
-COPY *.py /home/
-COPY *.yml /home/
-COPY *.txt /home/
-RUN pip install -r /home/requirements.txt
-
-ENTRYPOINT ["python", "/home/tick_min.py"]
-
-```
-
 ### build
 ```bash
 # 通过github git push触发 hub.docker自动build
@@ -22,11 +9,10 @@ docker pull haifengat/tick_min && docker tag haifengat/ctp_real_md haifengat/tic
 
 ### 启动
 ```bash
-docker-compose --compatibility up -d
+docker-compose up -d
 ```
 
 ### docker-compose
-`docker-compose --compatibility up -d`
 ```yml
 version: "3.7"
 services:
@@ -36,16 +22,13 @@ services:
         restart: always
         environment:
             - TZ=Asia/Shanghai
+            # tick文件路径
             - tick_csv_gz_path=/home/tick_csv_gz_path
+            # 用于保存分钟数据文件的路径
             - min_csv_gz_path=/home/min_csv_gz_path
         volumes:
+            # tick文件路径(宿主)
             - /mnt/future_tick_csv_gz:/home/tick_csv_gz_path
+            # 用于保存分钟数据文件的路径(宿主)
             - /mnt/future_min_csv_gz:/home/min_csv_gz_path
-        deploy:
-            resources:
-                limits:
-                    cpus: '1'
-                    memory: 2G
-                reservations:
-                    memory: 200M
 ```
